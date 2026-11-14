@@ -7,10 +7,11 @@ import json
 
 # prompt = f"You are to output strict JSON format and choose one of these functions as the answer:\n" \
 # f"{get_functions()}\n\n"
+names = "functions: ft_add(), ft_multiply, ft_divide, ft_substract"
 
 
-query = "Question:\n"
-"what's 2 + 3?\n"
+query = "Question:\n" \
+"one plus two equals "
 
 all_prompt = "" + query
 
@@ -26,7 +27,7 @@ def unmask_logits(vocab):
     capitalized = alphabets.upper()
     nums = "0123456789"
     special = " ,:\\.\n*-/?!%&-_+}{()"
-    thesum = alphabets + capitalized + nums + special
+    thesum = alphabets
 
 
     indices = []
@@ -40,7 +41,9 @@ def unmask_logits(vocab):
 vocab = get_vocab()
 with open("vocab.json", "w") as f:
     json.dump(vocab, f, indent=4)
-while True:
+
+loop = 1
+while loop:
 
     prompt_encoded = model.encode(all_prompt)[0]
 
@@ -66,3 +69,4 @@ while True:
 
     all_prompt += char
     print(char, end="", flush=True)
+    loop -= 1
